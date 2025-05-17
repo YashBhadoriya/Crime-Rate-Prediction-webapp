@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Rate Prediction</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1a1a2e;
+            color: #ecf0f1;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding-top: 50px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background: #0f3460;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .title {
+            font-size: 2.8em;
+            font-weight: bold;
+        }
+        .hero {
+            text-align: center;
+            margin: 40px 0;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards 0.5s;
+        }
+        .hero img {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+        .hero img:hover {
+            transform: scale(1.05);
+        }
+        .form-container {
+            background: #0f161e;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards 1s;
+        }
+        .label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 1.2em;
+        }
+        select {
+            width: 80%;
+            padding: 12px;
+            border-radius: 6px;
+            border: none;
+            background: #122e41;
+            color: white;
+            font-size: 1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        select:hover {
+            background-color: #113f5d;
+            transform: translateY(-2px);
+        }
+        .btn {
+            background-color: #0f3460;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s ease, transform 0.2s ease;
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #113f5d;
+            transform: translateY(-2px);
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #16213e;
+            color: white;
+            margin-top: 30px;
+            border-radius: 8px;
+            opacity: 0;
+            animation: fadeIn 1s forwards 2s;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="title">CRIME RATE PREDICTOR</h1>
+        </header>
+        <div class="hero">
+            <img src="https://thirdeyedata.ai/wp-content/uploads/2023/04/Safera-Banner.jpeg" alt="Crime Prediction">
+        </div>
+        <section class="form-container">
+            <form action="/predict" method="POST">
+                <div>
+                    <label class="label">Select City Name</label>
+                    <select name="city">
+                        <option value="0">Ahmedabad</option>
+                        <option value="1">Bengaluru</option>
+                        <option value="2">Chennai</option>
+                        <option value="3">Coimbatore</option>
+                        <option value="4">Delhi</option>
+                        <option value="5">Ghaziabad</option>
+                        <option value="6">Hyderabad</option>
+                        <option value="7">Indore</option>
+                        <option value="8">Jaipur</option>
+                        <option value="9">Kanpur</option>
+                        <option value="10">Kochi</option>
+                        <option value="11">Kolkata</option>
+                        <option value="12">Kozhikode</option>
+                        <option value="13">Lucknow</option>
+                        <option value="14">Mumbai</option>
+                        <option value="15">Nagpur</option>
+                        <option value="16">Patna</option>
+                        <option value="17">Pune</option>
+                        <option value="18">Surat</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="label">Select Crime Type</label>
+                    <select name="crime">
+                        <option value="0">Crime Committed by Juveniles</option>
+                        <option value="1">Crime against SC</option>
+                        <option value="2">Crime against ST</option>
+                        <option value="3">Crime against Senior Citizen</option>
+                        <option value="4">Crime against children</option>
+                        <option value="5">Crime against women</option>
+                        <option value="6">Cyber Crimes</option>
+                        <option value="7">Economic Offences</option>
+                        <option value="8">Kidnapping</option>
+                        <option value="9">Murder</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="label">Select Year</label>
+                    <select name="year" id="year-dropdown"></select>
+                </div>
+                <div>
+                    <input type="submit" class="btn" value="Predict">
+                </div>
+            </form>
+        </section>
+        <footer>
+            <p>&copy; 2025 Crime Rate Prediction.</p>
+        </footer>
+    </div>
+    <script>
+        // Populate year dropdown dynamically
+        let yearDropdown = document.getElementById("year-dropdown");
+        let currentYear = new Date().getFullYear();
+        for (let year = 2011; year <= currentYear; year++) {
+            let option = document.createElement("option");
+            option.value = year;
+            option.textContent = year;
+            yearDropdown.appendChild(option);
+        }
+    </script>
+</body>
+</html>

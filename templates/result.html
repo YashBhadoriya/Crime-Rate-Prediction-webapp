@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Rate Prediction Result</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1a1a2e;
+            color: #ecf0f1;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding-top: 50px;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background: #0f3460;
+            color: white;
+            border-radius: 8px;
+        }
+        .title {
+            font-size: 2.8em;
+            font-weight: bold;
+        }
+        .result-container {
+            background: #0f161e;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .crime-status {
+            background: #d35400;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5em;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-transform: uppercase;
+        }
+        .btn {
+            background-color: #0f3460;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #113f5d;
+            transform: translateY(-2px);
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #16213e;
+            color: white;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="title">CRIME RATE PREDICTOR - RESULT</h1>
+        </header>
+        <section class="result-container">
+            <h2>Prediction Results</h2>
+            <p><strong>City:</strong> <span id="city-name"></span></p>
+            <p><strong>Crime Type:</strong> <span id="crime-type"></span></p>
+            <p><strong>Year:</strong> <span id="year"></span></p>
+            <p><strong>Predicted Crime Rate:</strong> <span id="predicted-rate"></span></p>
+            <div class="crime-status" id="crime-status"></div>
+            <button class="btn" onclick="window.history.back()">Go Back</button>
+        </section>
+        <footer>
+            <p>&copy; 2025 Crime Rate Prediction. All Rights Reserved.</p>
+        </footer>
+    </div>
+    <script>
+        // Get values passed from previous form submission
+        const cityName = "Bengaluru";  // Example, replace with real value
+        const crimeType = "Cyber Crimes";  // Example, replace with real value
+        const year = "2023";  // Example, replace with real value
+        const predictedRate = 10.5;  // Example, replace with real predicted rate
+        
+        let crimeStatus = "";
+        if (predictedRate <= 1) {
+            crimeStatus = "Very Low Crime Area";
+        } else if (predictedRate <= 5) {
+            crimeStatus = "Low Crime Area";
+        } else if (predictedRate <= 15) {
+            crimeStatus = "High Crime Area";
+        } else {
+            crimeStatus = "Very High Crime Area";
+        }
+        
+        // Display the values
+        document.getElementById("city-name").textContent = cityName;
+        document.getElementById("crime-type").textContent = crimeType;
+        document.getElementById("year").textContent = year;
+        document.getElementById("predicted-rate").textContent = predictedRate + "%";
+        document.getElementById("crime-status").textContent = crimeStatus;
+    </script>
+</body>
+</html>
